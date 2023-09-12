@@ -1,47 +1,110 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
+    <h1 class="title"> SAT Solver DPLL </h1>
   </header>
-
   <main>
-    <TheWelcome />
+    <div class="formula" contenteditable="true" @input="updateInput"> </div>
+    <!-- <textarea id="formula" class="formula" type="text" v-model='input' placeholder="Enter the formula here" autofocus -->
+    <!--   rows=10 cols=50>  </textarea> -->
+    <button @click="solve" type="submit"> Solve </button>
+    <ResultForm v-bind:trues='trues' v-bind:falses='falses' v-bind:dcs='dcs' v-bind:solvable='solvable' />
   </main>
 </template>
 
+<script setup>
+import ResultForm from './components/ResultForm.vue';
+</script >
+
+<script>
+export default {
+  data: function () {
+    return {
+      trues: '',
+      falses: '',
+      dcs: '',
+      solvable: '',
+      input: '',
+    }
+  },
+  methods: {
+    solve() {
+      this.input = this.input.split('<div>').map(line => line.replace(/&nbsp;/g, '').trim().replace('</div>', '')).filter((line) => line !== "<br>").join("\n");
+
+      console.log(this.input)
+      const options = {
+        "method": "POST",
+        "mode": "cors",
+        "headers": {
+          "Accept": "application/json",
+          "Content-Type": "text/plain",
+        },
+        "body": this.input
+      };
+
+      fetch("http://127.0.0.1:3000/hello", options)
+        .then(resp => resp.json())
+        .then((json) => {
+          this.trues = json.trues.join();
+          this.falses = json.falses.join();
+          this.dcs = json.dcs.join();
+          this.solvable = json.solved.toString();
+        });
+    },
+    updateInput(event) {
+      this.input = event.target.innerHTML;
+    },
+    getLines() {
+    }
+  },
+};
+</script>
 <style scoped>
 header {
-  line-height: 1.5;
+  display: contents;
+  border-radius: 20px;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+header .title {
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 20px;
+  text-align: center;
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
+.formula {
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+  min-height: 50px;
+  background-color: white;
+  padding: 15px;
+  border: 1px solid white;
+  border-radius: 20px;
+}
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
+main {
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+}
 
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+button {
+  background-color: #F4A5AE;
+  border-radius: 20px;
+  border: 1px solid white;
+  padding: 15px 32px;
+  text-align: center;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+button:hover {
+  transition: 500ms ease;
+  background-color: #A8577E;
+  border: 1px solid black;
 }
 </style>
