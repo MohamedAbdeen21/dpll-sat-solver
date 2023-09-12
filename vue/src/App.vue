@@ -16,6 +16,7 @@ import ResultForm from './components/ResultForm.vue';
 </script >
 
 <script>
+const server_port = 3000
 export default {
   data: function () {
     return {
@@ -28,7 +29,12 @@ export default {
   },
   methods: {
     solve() {
-      this.input = this.input.split('<div>').map(line => line.replace(/&nbsp;/g, '').trim().replace('</div>', '')).filter((line) => line !== "<br>").join("\n");
+      this.input = this.input
+        .split('<div>')
+        .map(line => line.replace(/&nbsp;/g, '').trim().replace('</div>', ''))
+        .filter((line) => line !== "<br>")
+        .sort()
+        .join("\n");
 
       console.log(this.input)
       const options = {
@@ -41,7 +47,7 @@ export default {
         "body": this.input
       };
 
-      fetch("http://127.0.0.1:3000/hello", options)
+      fetch(`http://127.0.0.1:${server_port}/hello`, options)
         .then(resp => resp.json())
         .then((json) => {
           this.trues = json.trues.join();

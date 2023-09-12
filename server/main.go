@@ -8,10 +8,13 @@ import (
 	"regexp"
 	"strings"
 
+	"os"
+
 	"solver/dpll"
 )
 
-const PORT int = 3000
+var PORT = os.Getenv("SERVER_PORT")
+var CLIENT = os.Getenv("CLIENT_PORT")
 
 func scanRequest(request string) [][]string {
 	var lines [][]string
@@ -29,7 +32,7 @@ func scanRequest(request string) [][]string {
 
 func writeResponse(w http.ResponseWriter, jsonResponse []byte) {
 	w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:5173")
+	w.Header().Set("Access-Control-Allow-Origin", fmt.Sprintf("http://localhost:%s", CLIENT))
 	w.Header().Set("Access-Control-Allow-Methods", "POST")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	_, err := w.Write(jsonResponse)
@@ -65,6 +68,9 @@ func helloHandler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	http.HandleFunc("/hello", helloHandler)
+	if PORT == "" {
+		println(fmt.Errorf("SERVER_PORT env variable is not defined"))
+	}
 
 	fmt.Println("Starting server on port", PORT)
 	if err := http.ListenAndServe(fmt.Sprint(":", PORT), nil); err != nil {

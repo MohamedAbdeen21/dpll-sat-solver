@@ -1,0 +1,25 @@
+version: '3'
+
+
+env:
+  CLIENT_PORT: 8888 # needs to be seen by both
+
+tasks:
+  server:
+    env: 
+      SERVER_PORT: 3000 
+    desc: Run the Golang server
+    cmds:
+      - go run main.go
+    dir: ./server/
+
+  client:
+    desc: Run the vue client, server port is hardcoded in app.vue
+    cmds:
+      - npm install && npm run dev -- --port $CLIENT_PORT
+    dir: ./vue/
+
+  run:
+    deps:
+      - server
+      - client
