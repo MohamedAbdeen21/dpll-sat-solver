@@ -16,7 +16,7 @@ import (
 var PORT = os.Getenv("SERVER_PORT")
 var CLIENT = os.Getenv("CLIENT_PORT")
 
-func scanRequest(request string) [][]string {
+func parseRequest(request string) [][]string {
 	var lines [][]string
 
 	for _, clause := range strings.Split(request, "\n") {
@@ -54,7 +54,7 @@ func helloHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	lines := scanRequest(bodyStr)
+	lines := parseRequest(bodyStr)
 	solution := dpll.RunDPLL(lines)
 	jsonResponse, err := json.Marshal(solution)
 

@@ -31,9 +31,8 @@ export default {
     solve() {
       this.input = this.input
         .split('<div>')
-        .map(line => line.replace(/&nbsp;/g, '').trim().replace('</div>', ''))
+        .map(line => line.replace(/&nbsp;/g, ' ').replace('</div>', '').trim())
         .filter((line) => line !== "<br>")
-        .sort()
         .join("\n");
 
       console.log(this.input)
@@ -50,10 +49,10 @@ export default {
       fetch(`http://127.0.0.1:${server_port}/hello`, options)
         .then(resp => resp.json())
         .then((json) => {
-          this.trues = json.trues.join();
-          this.falses = json.falses.join();
-          this.dcs = json.dcs.join();
           this.solvable = json.solved.toString();
+          this.trues = json.trues.sort().join();
+          this.falses = json.falses.sort().join();
+          this.dcs = json.dcs.sort().join();
         });
     },
     updateInput(event) {

@@ -2,19 +2,30 @@ version: '3'
 
 
 env:
-  CLIENT_PORT: 8888 # needs to be seen by both
+  CLIENT_PORT: 8888 # needs to be seen by server too for CORS
 
 tasks:
+  build-server:
+    cmds:
+      - | 
+        if [ ! -f server ]; then 
+          go build -o server . 
+        fi
+    dir: ./server/
+
   server:
+    # Compiled binary is 5MBs, won't push to Git
+    deps:
+      - build-server
+    desc: Run the Golang server binary
     env: 
       SERVER_PORT: 3000 
-    desc: Run the Golang server
     cmds:
-      - go run main.go
+      - ./server
     dir: ./server/
 
   client:
-    desc: Run the vue client, server port is hardcoded in app.vue
+    desc: Run the vue client, server port is hardcoded in App.vue
     cmds:
       - npm install && npm run dev -- --port $CLIENT_PORT
     dir: ./vue/
