@@ -74,3 +74,16 @@ header .title {
   text-align: center;
 }
 </style>
+
+
+<!-- Style all hr -->
+<style>
+hr {
+  width: 80%;
+  height: 2px;
+  margin: 0 auto;
+  margin-top: 15px;
+  background-color: #A8577E;
+  border-color: #A8577E;
+}
+</style>

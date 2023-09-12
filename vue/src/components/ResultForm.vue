@@ -1,4 +1,5 @@
 <template>
+  <hr v-show="solvable">
   <div class="output">
     <ResultField label='Has solution?' v-bind:values="solvable" />
     <ResultField label='True' v-bind:values="trues" />
@@ -32,7 +33,5 @@ defineProps({
 <style scoped>
 .output {
   padding: 10px;
-  margin-left: auto;
-  margin-right: auto;
 }
 </style>

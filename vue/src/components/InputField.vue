@@ -74,15 +74,6 @@ export default {
   font-style: v-bind(font_style);
 }
 
-hr {
-  width: 80%;
-  height: 2px;
-  margin: 0 auto;
-  margin-top: 15px;
-  background-color: #A8577E;
-  border-color: #A8577E;
-}
-
 button {
   background-color: #F4A5AE;
   border-radius: 20px;
@@ -101,6 +92,7 @@ button:hover {
   transition: 500ms ease;
   background-color: #A8577E;
   border: 1px solid black;
+  color: white;
 }
 
 button:active {

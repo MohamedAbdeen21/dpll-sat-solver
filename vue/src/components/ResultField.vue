@@ -1,8 +1,8 @@
 <template>
-  <div class="form" v-show="values">
+  <form v-show="values">
     <label for="field"> {{ label }} </label>
     <input id="field" type="text" v-bind:value="values" readonly>
-  </div>
+  </form>
 </template>
 
 <script setup>
@@ -39,7 +39,7 @@ input {
   border-radius: 5px;
 }
 
-.form {
+form {
   border-radius: 15px;
   background-color: #A8577E;
   text-align: center;
