@@ -32,5 +32,7 @@ defineProps({
 <style scoped>
 .output {
   padding: 10px;
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>

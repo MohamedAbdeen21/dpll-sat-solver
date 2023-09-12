@@ -15,7 +15,7 @@ defineProps({
 </script>
 
 <script>
-const input_placeholder = "One line per clause, literals separated by space"
+const input_placeholder = "One line per clause, separate literals by spaces"
 
 export default {
   data: function () {
@@ -47,7 +47,7 @@ export default {
     updateInput(event) {
       this.input = event.target.innerHTML
         .split('<div>')
-        .map(line => line.replace(/&nbsp;/g, ' ').replace('</div>', '').trim())
+        .map(line => line.replace(/&nbsp;/g, ' ').replace(/\s+/g, " ").replace('</div>', '').trim())
         .filter((line) => line !== "<br>")
         .join("\n");
 
@@ -101,5 +101,9 @@ button:hover {
   transition: 500ms ease;
   background-color: #A8577E;
   border: 1px solid black;
+}
+
+button:active {
+  transform: scale(0.9);
 }
 </style>

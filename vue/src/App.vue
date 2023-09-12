@@ -39,10 +39,14 @@ export default {
       fetch(`http://127.0.0.1:${server_port}/hello`, options)
         .then(resp => resp.json())
         .then((json) => {
-          this.solvable = json.solved.toString();
-          this.trues = json.trues.sort().join();
-          this.falses = json.falses.sort().join();
-          this.dcs = json.dcs.sort().join();
+          if (json.solved) {
+            this.solvable = "Yes";
+            this.trues = json.trues.sort().join(', ');
+            this.falses = json.falses.sort().join(', ');
+            this.dcs = json.dcs.sort().join(', ');
+          } else {
+            this.solvable = "No";
+          }
         });
     },
     getInput(input) {

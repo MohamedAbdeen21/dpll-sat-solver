@@ -1,9 +1,7 @@
 <template>
-  <div class="field" v-show="values">
-    <form>
-      <label> {{ label }} </label>
-      <input type="text" v-bind:value="values" readonly>
-    </form>
+  <div class="form" v-show="values">
+    <label for="field"> {{ label }} </label>
+    <input id="field" type="text" v-bind:value="values" readonly>
   </div>
 </template>
 
@@ -25,22 +23,28 @@ defineProps({
 label {
   font-size: 20px;
   color: black;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 input {
   display: block;
   text-align: center;
-  width: 80%;
   margin-left: auto;
   margin-right: auto;
+  width: 80%;
+  margin-left: auto;
   margin-top: 10px;
   border-radius: 5px;
 }
 
-form {
+.form {
   border-radius: 15px;
   background-color: #A8577E;
+  text-align: center;
   padding: 10px;
+  width: 90%;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 10px;
