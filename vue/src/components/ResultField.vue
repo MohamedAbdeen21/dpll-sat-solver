@@ -2,7 +2,6 @@
   <div class="field" v-show="values">
     <form>
       <label> {{ label }} </label>
-      <br>
       <input type="text" v-bind:value="values" readonly>
     </form>
   </div>

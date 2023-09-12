@@ -10,8 +10,11 @@ tasks:
       - | 
         if [ ! -f server ]; then 
           go build -o server . 
+          echo "Built server binary"
         fi
     dir: ./server/
+    generates:
+      - server
 
   server:
     # Compiled binary is 5MBs, won't push to Git
