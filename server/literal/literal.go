@@ -50,7 +50,7 @@ func (l *Literal) String() string {
 }
 
 // return a copy of the literal with negated polarity,
-// useful in the DPLL Start() method
+// Used in the core DPLL algorithm
 func (l Literal) Negate() *Literal {
 	lit := &Literal{
 		Name:     l.Name,

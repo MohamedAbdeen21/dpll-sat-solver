@@ -48,7 +48,7 @@ func (f *Formula) RemoveClausesContainingLiteral(name string, polarity literal.P
 
 	for _, clause := range f.Clauses {
 		if clause.Contains(name) {
-			f.appendRestToDontCare(clause, name)
+			f.markRestAsDontCare(clause, name)
 			f.removeClause(clause)
 		}
 	}
@@ -163,7 +163,7 @@ func (f *Formula) setPures() {
 
 // Mark the rest of the literals as Don't Care, called after removing a clause
 // that contains a pure or a unit
-func (f *Formula) appendRestToDontCare(c *clause.Clause, name string) {
+func (f *Formula) markRestAsDontCare(c *clause.Clause, name string) {
 	for _, literal := range c.Literals {
 		if literal.String() != name && f.isUnique(literal) {
 			f.DontCare[literal.Name] = true
@@ -190,6 +190,7 @@ func (f *Formula) isUnique(lit *literal.Literal) bool {
 	return true
 }
 
+// assign the literal a value (true/false)
 func (f *Formula) assign(lit string, value bool) {
 	// quick and dirty workaround: instead of assigning negation to true, assign
 	// literals to false

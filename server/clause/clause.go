@@ -42,8 +42,8 @@ func (c *Clause) String() string {
 	return "(" + strings.Join(LiteralsNames, " v ") + ")"
 }
 
-// Remove a literal from the clause and re-set the Unit and Empty flags, this is
-// polarity-sensitive
+// Remove a literal from the clause and re-set the Unit
+// and Empty flags, this is polarity-sensitive
 func (c *Clause) RemoveLiteral(name string) {
 	var newLiterals []*literal.Literal
 	for _, lit := range c.Literals {

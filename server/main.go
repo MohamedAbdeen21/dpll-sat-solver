@@ -1,63 +1,73 @@
 package main
 
 import (
-	"bufio"
+	"encoding/json"
 	"fmt"
-	"os"
+	"io"
+	"net/http"
 	"regexp"
 	"strings"
 
 	"solver/dpll"
-	"solver/formula"
 )
 
-const PROMPT string = "Clause per line, enter empty line to start solving\n"
+const PORT int = 3000
 
-func runDPLL(input [][]string) {
-	f := formula.NewFormula(input)
-	fmt.Printf("Form: %s\n\n", f.String())
-	valid, assignments, dc := dpll.Solve(f)
-	var dcString []string
-	for s := range dc {
-		dcString = append(dcString, s)
-	}
-
-	if valid {
-		var trues []string
-		var falses []string
-		for str, assignedValue := range assignments {
-			if assignedValue {
-				trues = append(trues, str)
-			} else {
-				falses = append(falses, str)
-			}
-		}
-		fmt.Printf("True: %v\nFalse: %v\nDon't Care: %v\n", trues, falses, dcString)
-	} else {
-		fmt.Printf("unsat")
-	}
-}
-
-func scanInput() [][]string {
+func scanRequest(request string) [][]string {
 	var lines [][]string
-	scanner := bufio.NewScanner(os.Stdin)
-	fmt.Printf(PROMPT)
-	for scanner.Scan() {
-		input := strings.TrimSpace(scanner.Text())
-		// empty newline or ctrl-D
-		if input == "" || input == "q" || scanner.Err() != nil {
-			break
-		}
-		re := regexp.MustCompile(`\s+`)
-		literalsList := re.Split(input, -1)
-		lines = append(lines, literalsList)
-	}
 
+	for _, clause := range strings.Split(request, "\n") {
+		clause = strings.TrimSpace(clause)
+		if clause != "" {
+			re := regexp.MustCompile(`\s+`)
+			literalsList := re.Split(clause, -1)
+			lines = append(lines, literalsList)
+		}
+	}
 	return lines
 }
 
+func writeResponse(w http.ResponseWriter, jsonResponse []byte) {
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:5173")
+	w.Header().Set("Access-Control-Allow-Methods", "POST")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	_, err := w.Write(jsonResponse)
+
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+}
+
+func helloHandler(w http.ResponseWriter, r *http.Request) {
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+		panic(err.Error())
+	}
+	bodyStr := string(body)
+
+	if r.URL.Path != "/hello" {
+		http.Error(w, "404 not found", http.StatusNotFound)
+		return
+	}
+
+	lines := scanRequest(bodyStr)
+	solution := dpll.RunDPLL(lines)
+	jsonResponse, err := json.Marshal(solution)
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	writeResponse(w, jsonResponse)
+
+}
+
 func main() {
-	input := scanInput()
-	runDPLL(input)
-	bufio.NewScanner(os.Stdin).Scan() // hold window if using exe
+	http.HandleFunc("/hello", helloHandler)
+
+	fmt.Println("Starting server on port", PORT)
+	if err := http.ListenAndServe(fmt.Sprint(":", PORT), nil); err != nil {
+		println(err.Error())
+	}
 }
