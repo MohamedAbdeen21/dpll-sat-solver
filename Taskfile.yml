@@ -4,7 +4,7 @@ version: '3'
 env:
   CLIENT_PORT: 8888 
   SERVER_PORT: 3000 
-  URL: "http://127.0.0.1"
+  URL: "http://localhost"
 
 tasks:
   # Vite requires env variables to have a 
@@ -22,10 +22,8 @@ tasks:
   build-server:
     cmds:
       - | 
-        if [ ! -f server ]; then 
-          go build -o server . 
-          echo "Built server binary"
-        fi
+        go build -o server . 
+        echo "Built server binary"
     dir: ./server/
     generates:
       - server

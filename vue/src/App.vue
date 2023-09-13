@@ -40,7 +40,7 @@ export default {
         "body": input
       };
 
-      fetch(`${url}:${server_port}/hello`, options)
+      fetch(`${url}:${server_port}/solve`, options)
         .then(resp => resp.json())
         .then((json) => {
           if (json.solved) {

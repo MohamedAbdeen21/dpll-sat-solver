@@ -43,17 +43,12 @@ func writeResponse(w http.ResponseWriter, jsonResponse []byte) {
 	}
 }
 
-func helloHandler(w http.ResponseWriter, r *http.Request) {
+func solveHandler(w http.ResponseWriter, r *http.Request) {
 	body, err := io.ReadAll(r.Body)
 	if err != nil {
 		panic(err.Error())
 	}
 	bodyStr := string(body)
-
-	if r.URL.Path != "/hello" {
-		http.Error(w, "404 not found", http.StatusNotFound)
-		return
-	}
 
 	lines := parseRequest(bodyStr)
 	solution := dpll.RunDPLL(lines)
@@ -68,7 +63,8 @@ func helloHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/hello", helloHandler)
+	http.HandleFunc("/solve", solveHandler)
+	fmt.Printf("reading on: %s:%s\n", URL, CLIENT)
 	if PORT == "" {
 		println(fmt.Errorf("SERVER_PORT env variable is not defined"))
 	}
