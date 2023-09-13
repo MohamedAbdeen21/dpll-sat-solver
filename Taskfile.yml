@@ -51,6 +51,3 @@ tasks:
     deps:
       - server
       - client
-    cmd:
-      rm .env
-    dir: ./vue/
