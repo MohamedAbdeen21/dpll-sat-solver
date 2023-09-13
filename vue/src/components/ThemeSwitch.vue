@@ -41,7 +41,7 @@ export default {
 </script >
 
 <style scoped>
-header .theme-switch {
+.theme-switch {
   height: 20px;
   width: 15px;
   margin-left: 15px;
