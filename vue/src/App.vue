@@ -16,8 +16,9 @@ import ThemeSwitch from './components/ThemeSwitch.vue';
 </script>
 
 <script>
-const server_port = 3000
-const url = "http://127.0.0.1"
+const server_port = import.meta.env.VITE_SERVER_PORT;
+const url = import.meta.env.VITE_URL;
+
 export default {
   data: function () {
     return {

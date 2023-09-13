@@ -3,9 +3,22 @@ version: '3'
 # need to be seen by server too for CORS
 env:
   CLIENT_PORT: 8888 
+  SERVER_PORT: 3000 
   URL: "http://127.0.0.1"
 
 tasks:
+  # Vite requires env variables to have a 
+  # special name (VITE_ prefix) and to be in a .env file
+  config-client:
+    cmds:
+      - | 
+        npm install
+        echo "VITE_URL=$URL" > .env
+        echo "VITE_SERVER_PORT=$SERVER_PORT" >> .env
+    generates:
+      - .env
+    dir: ./vue/
+
   build-server:
     cmds:
       - | 
@@ -22,19 +35,22 @@ tasks:
     deps:
       - build-server
     desc: Run the Golang server binary
-    env: 
-      SERVER_PORT: 3000 
     cmds:
       - ./server
     dir: ./server/
 
   client:
     desc: Run the vue client, server port is hardcoded in App.vue
+    deps:
+      - config-client
     cmds:
-      - npm install && npm run dev -- --port $CLIENT_PORT --host
+      - npm run dev -- --port $CLIENT_PORT --host
     dir: ./vue/
 
   run:
     deps:
       - server
       - client
+    cmd:
+      rm .env
+    dir: ./vue/
