@@ -29,6 +29,7 @@ label {
 }
 
 input {
+  background-color: var(--input);
   display: block;
   text-align: center;
   margin-left: auto;
@@ -36,12 +37,13 @@ input {
   width: 80%;
   margin-left: auto;
   margin-top: 10px;
-  border-radius: 5px;
+  border: 1px solid white;
+  border-radius: 20px;
 }
 
 form {
   border-radius: 15px;
-  background-color: #A8577E;
+  background-color: var(--secondary);
   text-align: center;
   padding: 10px;
   width: 90%;

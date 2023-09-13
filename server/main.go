@@ -15,6 +15,7 @@ import (
 
 var PORT = os.Getenv("SERVER_PORT")
 var CLIENT = os.Getenv("CLIENT_PORT")
+var URL = os.Getenv("URL")
 
 func parseRequest(request string) [][]string {
 	var lines [][]string
@@ -32,7 +33,7 @@ func parseRequest(request string) [][]string {
 
 func writeResponse(w http.ResponseWriter, jsonResponse []byte) {
 	w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Access-Control-Allow-Origin", fmt.Sprintf("http://localhost:%s", CLIENT))
+	w.Header().Set("Access-Control-Allow-Origin", fmt.Sprintf("%s:%s", URL, CLIENT))
 	w.Header().Set("Access-Control-Allow-Methods", "POST")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	_, err := w.Write(jsonResponse)

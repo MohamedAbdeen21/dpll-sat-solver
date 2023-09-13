@@ -32,6 +32,7 @@ label {
 }
 
 input {
+  background-color: var(--input);
   text-align: center;
   width: 80%;
   margin-left: auto;

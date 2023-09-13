@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     clearInput(event) {
-      if (event.target.innerHTML === input_placeholder) {
+      if (event.target.innerText.trim() === input_placeholder) {
         event.target.innerHTML = ""
         this.formula = ""
         this.color = "black"
@@ -36,7 +36,7 @@ export default {
       }
     },
     resetInput(event) {
-      if (event.target.innerHTML === "") {
+      if (event.target.innerText.trim() === "") {
         event.target.innerHTML = input_placeholder
         this.formula = ""
         this.color = "grey"
@@ -66,7 +66,7 @@ export default {
   margin-right: auto;
   width: 80%;
   min-height: 50px;
-  background-color: white;
+  background-color: var(--input);
   padding: 15px;
   border: 1px solid white;
   border-radius: 20px;
@@ -75,7 +75,7 @@ export default {
 }
 
 button {
-  background-color: #F4A5AE;
+  background-color: var(--primary);
   border-radius: 20px;
   border: 1px solid white;
   padding: 15px 32px;
@@ -90,7 +90,7 @@ button {
 
 button:hover {
   transition: 500ms ease;
-  background-color: #A8577E;
+  background-color: var(--secondary);
   border: 1px solid black;
   color: white;
 }

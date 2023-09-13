@@ -1,8 +1,9 @@
 version: '3'
 
-
+# need to be seen by server too for CORS
 env:
-  CLIENT_PORT: 8888 # needs to be seen by server too for CORS
+  CLIENT_PORT: 8888 
+  URL: "http://127.0.0.1"
 
 tasks:
   build-server:
@@ -30,7 +31,7 @@ tasks:
   client:
     desc: Run the vue client, server port is hardcoded in App.vue
     cmds:
-      - npm install && npm run dev -- --port $CLIENT_PORT
+      - npm install && npm run dev -- --port $CLIENT_PORT --host
     dir: ./vue/
 
   run:

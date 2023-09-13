@@ -1,6 +1,7 @@
 <template>
   <header>
     <h1 class="title"> SAT Solver DPLL </h1>
+    <ThemeSwitch />
   </header>
   <main>
     <InputField v-bind:getInput="getInput" />
@@ -10,11 +11,13 @@
 
 <script setup>
 import ResultForm from './components/ResultForm.vue';
-import InputField from './components/InputField.vue'
-</script >
+import InputField from './components/InputField.vue';
+import ThemeSwitch from './components/ThemeSwitch.vue';
+</script>
 
 <script>
 const server_port = 3000
+const url = "http://127.0.0.1"
 export default {
   data: function () {
     return {
@@ -36,7 +39,7 @@ export default {
         "body": input
       };
 
-      fetch(`http://127.0.0.1:${server_port}/hello`, options)
+      fetch(`${url}:${server_port}/hello`, options)
         .then(resp => resp.json())
         .then((json) => {
           if (json.solved) {
@@ -55,6 +58,7 @@ export default {
   },
 };
 </script>
+
 <style scoped>
 main {
   margin-left: auto;
@@ -63,27 +67,54 @@ main {
 }
 
 header {
-  display: contents;
+  display: flex;
   border-radius: 20px;
+  width: 100%;
 }
 
 header .title {
+  position: relative;
   margin-left: auto;
   margin-right: auto;
-  padding-top: 20px;
+  margin-top: 40px;
+  left: 30px;
   text-align: center;
 }
 </style>
 
-
-<!-- Style all hr -->
+<!-- Global styles -->
 <style>
+:root {
+  --bg: #F5D7E3;
+  --primary: #F4A5AE;
+  --secondary: #A8577E;
+  --input: white;
+}
+
 hr {
   width: 80%;
   height: 2px;
   margin: 0 auto;
   margin-top: 15px;
-  background-color: #A8577E;
-  border-color: #A8577E;
+  background-color: var(--secondary);
+  border-color: var(--secondary);
+}
+
+body {
+  background-color: var(--bg);
+  font-family: 'Fira Sans', sans-serif;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.app {
+  background-color: var(--primary);
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 40px;
+  width: 70%;
+  max-width: 500px;
+  min-width: 200px;
+  border-radius: 20px;
 }
 </style>
