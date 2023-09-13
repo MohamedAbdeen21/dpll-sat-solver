@@ -6,8 +6,6 @@ This is a DPLL-based SAT Solver implemented in Go for solving Boolean satisfiabi
 - [Features](#features)
 - [Requirements](#requirements)
 - [Installation](#installation)
-- [Usage](#usage)
-- [Build](#build)
 - [License](#license)
 
 ## Features
@@ -31,7 +29,7 @@ To run this project locally, you will need the following:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/dpll-sat-solver.git
+   git clone git@github.com:MohamedAbdeen21/dpll-sat-solver.git
    cd dpll-sat-solver
    ```
 
