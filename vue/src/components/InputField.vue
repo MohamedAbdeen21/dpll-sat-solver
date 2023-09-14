@@ -15,40 +15,40 @@ defineProps({
 </script>
 
 <script>
-const input_placeholder = "One line per clause, separate literals by spaces"
+const INPUT_PLACEHOLDER = "One line per clause, separate literals by spaces"
 
 export default {
   data: function () {
     return {
-      input: input_placeholder,
+      input: INPUT_PLACEHOLDER,
       formula: '',
       color: "grey",
-      font_style: "italic"
+      fontStyle: "italic"
     }
   },
   methods: {
     clearInput(event) {
-      if (event.target.innerText.trim() === input_placeholder) {
-        event.target.innerHTML = ""
-        this.formula = ""
-        this.color = "black"
-        this.font_style = "normal"
+      if (event.target.innerText.trim() !== INPUT_PLACEHOLDER) {
+        return
       }
+      event.target.innerHTML = ""
+      this.formula = ""
+      this.color = "black"
+      this.fontStyle = "normal"
     },
     resetInput(event) {
-      if (event.target.innerText.trim() === "") {
-        event.target.innerHTML = input_placeholder
-        this.formula = ""
-        this.color = "grey"
-        this.font_style = "italic"
-
+      if (event.target.innerText.trim() !== "") {
+        return
       }
+      event.target.innerHTML = INPUT_PLACEHOLDER
+      this.formula = ""
+      this.color = "grey"
+      this.fontStyle = "italic"
     },
     updateInput(event) {
       this.input = event.target.innerHTML
         .split('<div>')
-        .map(line => line.replace(/&nbsp;/g, ' ').replace(/\s+/g, " ").replace('</div>', '').trim())
-        .filter((line) => line !== "<br>")
+        .map(line => line.replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').replace('</div>', '').replace('<br>', '').trim())
         .join("\n");
 
       this.formula = this.input
@@ -71,7 +71,7 @@ export default {
   border: 1px solid white;
   border-radius: 20px;
   color: v-bind(color);
-  font-style: v-bind(font_style);
+  font-style: v-bind(fontStyle);
 }
 
 button {

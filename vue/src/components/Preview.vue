@@ -1,7 +1,7 @@
 <template>
   <div class="preview-container">
     <label for="preview"> Preview </label>
-    <input id="preview" class="preview" type="text" v-bind:value="formula" readonly>
+    <textarea id="preview" class="preview" v-bind:value="formula" rows="4" cols="50" readonly></textarea>
   </div>
 </template>
 
@@ -31,7 +31,7 @@ label {
   color: black;
 }
 
-input {
+textarea {
   background-color: var(--input);
   text-align: center;
   width: 80%;
@@ -39,5 +39,6 @@ input {
   margin-right: auto;
   margin-top: 10px;
   border-radius: 10px;
+  resize: vertical;
 }
 </style>

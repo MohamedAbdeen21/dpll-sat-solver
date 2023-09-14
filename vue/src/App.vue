@@ -83,7 +83,6 @@ header .title {
 }
 </style>
 
-<!-- Global styles -->
 <style>
 :root {
   --bg: #F5D7E3;
