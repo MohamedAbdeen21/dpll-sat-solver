@@ -29,7 +29,7 @@ export default {
     }
   },
   methods: {
-    solve(input) {
+    async solve(input) {
       const options = {
         "method": "POST",
         "mode": "cors",
@@ -40,18 +40,25 @@ export default {
         "body": input
       };
 
-      fetch(`${url}:${server_port}/solve`, options)
-        .then(resp => resp.json())
-        .then((json) => {
-          if (json.solved) {
-            this.solvable = "Yes";
-            this.trues = json.trues.sort().join(', ');
-            this.falses = json.falses.sort().join(', ');
-            this.dcs = json.dcs.sort().join(', ');
-          } else {
-            this.solvable = "No";
-          }
-        });
+      try {
+        const resp = await fetch(`${url}:${server_port}/solve`, options);
+        if (!resp.ok) {
+          throw new Error(`HTTP Error: ${resp.status}`);
+        }
+
+        const json = await resp.json();
+
+        if (json.solved) {
+          this.solvable = "Yes";
+          this.trues = json.trues.sort().join(', ');
+          this.falses = json.falses.sort().join(', ');
+          this.dcs = json.dcs.sort().join(', ');
+        } else {
+          this.solvable = "No";
+        }
+      } catch (err) {
+        alert(`Unexpected error: ${err}`)
+      }
     },
     getInput(input) {
       this.solve(input);

@@ -36,6 +36,7 @@ func writeResponse(w http.ResponseWriter, jsonResponse []byte) {
 	w.Header().Set("Access-Control-Allow-Origin", fmt.Sprintf("%s:%s", URL, CLIENT))
 	w.Header().Set("Access-Control-Allow-Methods", "POST")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	w.WriteHeader(http.StatusOK)
 	_, err := w.Write(jsonResponse)
 
 	if err != nil {
