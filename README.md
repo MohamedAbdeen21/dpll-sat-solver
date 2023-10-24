@@ -1,6 +1,6 @@
 # DPLL SAT Solver
 
-This is a DPLL-based SAT Solver implemented in Go for solving Boolean satisfiability problems.
+Satisfiability problem Solver (DPLL Algorithm) implemented in Go for solving Boolean satisfiability problems, with a Vue JS frontend.
 
 ## Table of Contents
 - [Features](#features)
@@ -13,7 +13,7 @@ This is a DPLL-based SAT Solver implemented in Go for solving Boolean satisfiabi
 - DPLL (Davis-Putnam-Logemann-Loveland) algorithm implementation for solving SAT problems.
 - A web-based user interface for interacting with the SAT solver.
 - Theme changer and dark mode for improved user experience.
-- Built using Go for the backend server and Vue.js for the frontend.
+- Solver is fully tested with both unit and integration tests.
 - Managed by go-task build tool for easier building and deployment.
 
 ## Requirements
@@ -22,7 +22,7 @@ To run this project locally, you will need the following:
 
 - Go (Golang): [Installation Guide](https://golang.org/doc/install)
 - Node.js and npm: [Installation Guide](https://nodejs.org/)
-- Task (go-task): [Installation Guide](https://taskfile.dev/installation/)
+- [Optional] Task (go-task): [Installation Guide](https://taskfile.dev/installation/)
 
 ## Installation
 
