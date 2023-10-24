@@ -2,3 +2,5 @@
 server/server
 **/.vscode/
 **/.env
+**/coverage.out
+**/Dockerfile
